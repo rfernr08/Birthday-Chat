@@ -1,0 +1,208 @@
+:root {
+    --color-bg: #1A1B1E;
+    --color-sidebar: #121316;
+    --color-purple: #825CFF;
+    --color-pink: #FF4DA6;
+    --color-blue: #5C9EFF;
+    --color-yellow: #FFF677;
+    --color-text: #E1E1E6;
+    --color-ping-bg: rgba(255, 77, 166, 0.15);
+    --color-quote-bg: rgba(255, 255, 255, 0.05);
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+/* ─── PANTALLA DE LOGIN ─── */
+#pantalla-login {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: var(--color-bg);
+    display: flex; justify-content: center; align-items: center; z-index: 100;
+}
+
+.caja-login {
+    background-color: var(--color-sidebar);
+    padding: 40px; border-radius: 15px; width: 100%; max-width: 400px;
+    text-align: center; border: 1px solid rgba(130, 92, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.caja-login h2 {
+    color: var(--color-pink); font-family: 'Courier New', Courier, monospace;
+    font-size: 22px; margin-bottom: 25px; letter-spacing: 2px;
+}
+
+.caja-login input {
+    width: 100%; padding: 12px; background-color: var(--color-bg);
+    border: 1px solid var(--color-purple); border-radius: 6px;
+    color: white; text-align: center; font-size: 16px; margin-bottom: 20px;
+    outline: none;
+}
+
+.caja-login button {
+    width: 100%; padding: 12px; background-color: var(--color-purple);
+    border: none; border-radius: 6px; color: white; font-weight: bold;
+    font-size: 16px; cursor: pointer; transition: 0.3s;
+}
+
+.caja-login button:hover { background-color: var(--color-pink); }
+#error-login { color: #ff4d4d; font-size: 14px; margin-top: 15px; }
+
+/* ─── INTERFAZ PRINCIPAL ─── */
+#interfaz-chat { display: none; width: 100%; height: 100%; }
+
+.sidebar {
+    width: 260px; background-color: var(--color-sidebar);
+    display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.sidebar h3 {
+    padding: 25px 20px; font-family: 'Courier New', Courier, monospace;
+    color: var(--color-blue); font-size: 18px; letter-spacing: 1px;
+}
+
+.lista-canales { flex: 1; overflow-y: auto; padding: 0 10px; }
+
+.btn-canal {
+    width: 100%; padding: 12px 15px; background: transparent; border: none;
+    color: var(--color-yellow); text-align: left; font-size: 15px; 
+    cursor: pointer; border-radius: 6px; margin-bottom: 4px; transition: 0.2s;
+}
+
+.btn-canal:hover { background-color: rgba(255, 246, 119, 0.1); color: var(--color-yellow); }
+.btn-canal.activo { background-color: var(--color-yellow); color: var(--color-sidebar); font-weight: bold; }
+
+.area-principal { flex: 1; display: flex; flex-direction: column; height: 100%; position: relative; }
+
+.cabecera-canal {
+    padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--color-pink); font-weight: bold; font-size: 18px;
+}
+
+.historial-mensajes {
+    flex: 1; 
+    overflow-y: auto; 
+    padding: 20px;
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px;
+    background-image: 
+        linear-gradient(rgba(26, 27, 30, 0.85), rgba(26, 27, 30, 0.85)), 
+        url('/images/CORAL-Fulmen-NODE-MINI.jpg');                                 
+    background-size: cover;       
+    background-position: center;  
+    background-attachment: fixed; 
+}
+
+.linea-mensaje {
+    font-size: 15px; line-height: 1.4; word-break: break-word;
+    padding: 8px 12px; border-radius: 6px; border: 1px solid transparent;
+    position: relative; display: flex; flex-direction: column; gap: 4px;
+}
+
+.btn-reply-trigger {
+    position: absolute; right: 15px; top: 8px; background: var(--color-sidebar);
+    border: 1px solid var(--color-purple); color: var(--color-purple);
+    padding: 2px 8px; border-radius: 4px; cursor: pointer; font-size: 12px;
+    display: none; transition: 0.2s;
+}
+
+.linea-mensaje:hover .btn-reply-trigger { display: block; }
+.btn-reply-trigger:hover { color: var(--color-pink); border-color: var(--color-pink); }
+
+.bloque-quote-renderizado {
+    background-color: var(--color-quote-bg);
+    border-left: 3px solid var(--color-purple);
+    padding: 4px 10px; border-radius: 0 4px 4px 0;
+    font-size: 13px; color: #a1a1a8; font-style: italic;
+    margin-bottom: 2px; max-width: max-content;
+}
+
+.linea-mensaje.pingeado {
+    background-color: var(--color-ping-bg); border-color: var(--color-pink);
+    animation: parpadeo-ping 1.5s ease-out;
+}
+
+@keyframes parpadeo-ping {
+    0% { box-shadow: 0 0 15px var(--color-pink); }
+    100% { box-shadow: 0 0 0px transparent; }
+}
+
+.tag-sistema { color: var(--color-yellow); font-style: italic; }
+.alias-propio { color: var(--color-pink); font-weight: bold; }
+.alias-ajeno { color: var(--color-blue); font-weight: bold; }
+
+.chat-imagen {
+    max-width: 300px; max-height: 200px; border-radius: 8px;
+    margin-top: 4px; display: block; border: 1px solid var(--color-purple); cursor: pointer;
+}
+
+.chat-archivo {
+    display: inline-flex; align-items: center; gap: 10px;
+    background-color: var(--color-sidebar); padding: 10px 15px;
+    border-radius: 8px; border: 1px solid var(--color-purple);
+    margin-top: 4px; text-decoration: none; color: var(--color-blue); font-weight: bold; font-size: 14px;
+}
+
+/* ─── ZONA DE ENTRADA Y COMPONENTES FLOTANTES ─── */
+.contenedor-inferior {
+    background-color: var(--color-sidebar);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    position: relative; display: flex; flex-direction: column;
+}
+
+.barra-respuesta-activa {
+    background-color: rgba(130, 92, 255, 0.1);
+    border-left: 4px solid var(--color-pink);
+    padding: 8px 20px; font-size: 13px; color: var(--color-text);
+    display: none; justify-content: space-between; align-items: center;
+}
+.barra-respuesta-activa span { font-weight: bold; color: var(--color-pink); }
+.btn-cancelar-respuesta { background: transparent; border: none; color: #ff4d4d; cursor: pointer; font-size: 14px; }
+
+.menu-autocomplete {
+    position: absolute; bottom: 100%; left: 60px; right: 20px;
+    background-color: var(--color-sidebar); border: 1px solid var(--color-purple);
+    border-radius: 8px 8px 0 0; max-height: 180px; overflow-y: auto;
+    display: none; flex-direction: column; z-index: 10; box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+}
+
+.opcion-autocomplete {
+    padding: 10px 15px; cursor: pointer; font-size: 14px; color: var(--color-text);
+    transition: 0.2s; border-bottom: 1px solid rgba(255,255,255,0.02);
+}
+.opcion-autocomplete:hover, .opcion-autocomplete.seleccionada {
+    background-color: var(--color-purple); color: white; font-weight: bold;
+}
+
+.area-input { padding: 20px; display: flex; gap: 10px; align-items: center; }
+
+.area-input input {
+    flex: 1; padding: 14px; background-color: var(--color-bg);
+    border: 1px solid var(--color-purple); border-radius: 6px;
+    color: white; font-size: 15px; outline: none;
+}
+
+.btn-adjuntar {
+    background-color: var(--color-bg); border: 1px solid var(--color-purple);
+    color: var(--color-text); padding: 12px 15px; border-radius: 6px; cursor: pointer; font-size: 18px;
+}
+.btn-adjuntar:hover { border-color: var(--color-pink); color: var(--color-pink); }
+
+.area-input button.btn-enviar {
+    padding: 14px 25px; background-color: var(--color-purple);
+    border: none; border-radius: 6px; color: white; font-weight: bold; font-size: 15px; cursor: pointer;
+}
+.area-input button.btn-enviar:hover { background-color: var(--color-pink); }
